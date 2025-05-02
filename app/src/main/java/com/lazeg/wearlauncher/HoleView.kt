@@ -33,7 +33,7 @@ class HoleView @JvmOverloads constructor(
         viewPath.addRect(0F, 0F, width.toFloat(), height.toFloat(), Path.Direction.CW)
         viewPath.op(holePath, Path.Op.DIFFERENCE)
         canvas.withClip(viewPath) {
-            drawColor("#BB000000".toColorInt())
+            drawColor("#000000".toColorInt())
         }
     }
 }

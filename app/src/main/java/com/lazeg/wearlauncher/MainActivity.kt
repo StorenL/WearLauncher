@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.lazeg.wearlauncher.config.ItemConfig
 import com.lazeg.wearlauncher.config.LensConfig
 import com.lazeg.wearlauncher.databinding.ActivityMainBinding
 
@@ -24,9 +25,16 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mBinding.recyclerView.layoutManager = LensLayoutManager(
-            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf())
+            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf(
+                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
+                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
+                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+            ))
         )
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
+        // LinearSnapHelper().attachToRecyclerView(mBinding.recyclerView)
         mBinding.viewBoard.post {
             Log.d(TAG, "onCreate: ${mBinding.viewBoard.x}, ${mBinding.viewBoard.y}")
         }
@@ -36,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private fun getIconList(): List<Int> {
         return mutableListOf<Int>().apply {
             repeat(10000) {
-                add(R.drawable.baseline_account_balance_24)
+                add(R.drawable.outline_balance_24)
             }
         }
     }
