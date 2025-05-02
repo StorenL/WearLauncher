@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WearLauncher</string>
+    <string name="icon_description">grid icon</string>
 </resources>
