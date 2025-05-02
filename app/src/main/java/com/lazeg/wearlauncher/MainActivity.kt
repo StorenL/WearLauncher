@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mBinding.recyclerView.layoutManager = LensLayoutManager(
-            LensConfig(300, 300, 3, 3, 1, 10, 10, 0, listOf())
+            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf())
         )
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
         mBinding.viewBoard.post {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     // Example list of icon resources
     private fun getIconList(): List<Int> {
         return mutableListOf<Int>().apply {
-            repeat(100) {
+            repeat(10000) {
                 add(R.drawable.baseline_account_balance_24)
             }
         }

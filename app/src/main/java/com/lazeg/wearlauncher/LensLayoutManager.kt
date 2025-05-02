@@ -32,11 +32,15 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
     }
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        val startRow = sumDy / config.cellWidth - config.overDraw
-        val startCol = sumDx / config.cellHeight - config.overDraw
-        Log.d(TAG, "fill: $sumDy, $startRow, $startCol")
-        for (row in max(startRow, 0) until (startRow + config.drawRow + config.overDraw * 2)) {
-            for (col in max(startCol, 0) until (startCol + config.drawCol + config.overDraw * 2)) {
+        // 为了确保显示区域尽量居中（上滑1.2个格子时，还是从0开始绘制；上滑1.8个格子时，从1开始绘制）
+        val startRow = (sumDy + config.cellHeight / 2) / config.cellHeight - config.overDraw
+        val startCol = (sumDx + config.cellWidth / 2) / config.cellWidth - config.overDraw
+        for (row in startRow until (startRow + config.drawRow + config.overDraw * 2)) {
+            for (col in startCol until (startCol + config.drawCol + config.overDraw * 2)) {
+                if (row < 0 || col >= config.maxCol || col < 0) {
+                    continue
+                }
+                Log.d(TAG, "fill: $sumDy,$sumDx $startRow,$startCol")
                 val index = row * config.maxCol + col
                 if (index >= state.itemCount) {
                     continue
