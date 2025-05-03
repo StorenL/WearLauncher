@@ -5,11 +5,10 @@
     android:id="@+id/iconImageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
     android:background="@color/design_default_color_error"
     android:contentDescription="@string/icon_description"
-    android:padding="10dp"
+    android:padding="0dp"
     android:src="@drawable/outline_balance_24"
-    app:round="100dp"
+    app:round="10dp"
     tools:layout_height="100dp"
     tools:layout_width="100dp" />

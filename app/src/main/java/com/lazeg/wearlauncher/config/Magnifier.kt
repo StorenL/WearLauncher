@@ -47,6 +47,24 @@ data class LensConfig(
     val expendDir: Int,
     val itemConfigs: List<List<ItemConfig>>
 ) {
+    companion object {
+        fun buildItemConfigs(
+            offsetXs: Array<FloatArray>,
+            offsetYs: Array<FloatArray>,
+            scales: Array<FloatArray>
+        ): List<List<ItemConfig>> {
+            val itemConfigs: MutableList<List<ItemConfig>> = mutableListOf()
+            for (i in 0 until scales.size) {
+                val configs: MutableList<ItemConfig> = mutableListOf()
+                itemConfigs.add(configs)
+                for (j in 0 until offsetXs[i].size) {
+                    configs.add(ItemConfig(offsetXs[i][j], offsetYs[i][j], scales[i][j]))
+                }
+            }
+            return itemConfigs
+        }
+    }
+
     fun takeItemConfig(row: Int, col: Int): ItemConfig {
         return if (row < 0 || col < 0 || row >= itemConfigs.size || col >= itemConfigs[row].size) {
             ItemConfig.DEFAULT

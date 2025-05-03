@@ -18,8 +18,6 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
 
     private var sumDx: Int = 0
     private var sumDy: Int = 0
-    private var horProgress: Float = 0F
-    private var verProgress: Float = 0F
 
     private val horHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.HORIZONTAL)
     private val verHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.VERTICAL)
@@ -38,13 +36,15 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         // 为了确保显示区域尽量居中（上滑1.2个格子时，还是从0开始绘制；上滑1.8个格子时，从1开始绘制）
-//        val startRow = (sumDy + config.cellHeight / 2) / config.cellHeight - config.overDraw
-//        val startCol = (sumDx + config.cellWidth / 2) / config.cellWidth - config.overDraw
+        // val startRow = (sumDy + config.cellHeight / 2) / config.cellHeight - config.overDraw
+        // val startCol = (sumDx + config.cellWidth / 2) / config.cellWidth - config.overDraw
 
         val rowProgress = sumDy * 1f / config.cellHeight
-        val startRow = rowProgress.toInt() - config.overDraw
         val colProgress = sumDx * 1f / config.cellWidth
-        val startCol = colProgress.toInt() - config.overDraw
+        val startRow = rowProgress.roundToInt() - config.overDraw
+        val startCol = colProgress.roundToInt() - config.overDraw
+        val _startRow = rowProgress.toInt() - config.overDraw
+        val _startCol = colProgress.toInt() - config.overDraw
 
         for (row in startRow until (startRow + config.drawRow + config.overDraw * 2)) {
             for (col in startCol until (startCol + config.drawCol + config.overDraw * 2)) {
@@ -57,12 +57,12 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
                 }
                 val view = recycler.getViewForPosition(index)
 
-                var curRowCurColItemConfig = config.takeItemConfig(row - startRow, col - startCol)
-                var preRowCurColItemConfig = config.takeItemConfig(row - startRow - 1, col - startCol)
+                var curRowCurColItemConfig = config.takeItemConfig(row - _startRow, col - _startCol)
+                var preRowCurColItemConfig = config.takeItemConfig(row - _startRow - 1, col - _startCol)
                 curRowCurColItemConfig = curRowCurColItemConfig.progressTo(preRowCurColItemConfig, rowProgress - rowProgress.toInt())
 
-                var curRowPreColItemConfig = config.takeItemConfig(row - startRow, col - startCol - 1)
-                val preRowPreColItemConfig =  config.takeItemConfig(row - startRow - 1, col - startCol - 1)
+                var curRowPreColItemConfig = config.takeItemConfig(row - _startRow, col - _startCol - 1)
+                val preRowPreColItemConfig =  config.takeItemConfig(row - _startRow - 1, col - _startCol - 1)
                 curRowPreColItemConfig = curRowPreColItemConfig.progressTo(preRowPreColItemConfig, rowProgress - rowProgress.toInt())
 
                 val itemConfig = curRowCurColItemConfig.progressTo(curRowPreColItemConfig, colProgress - colProgress.toInt())
@@ -102,7 +102,12 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
         state: RecyclerView.State
     ): Int {
         sumDy += dy
-        Log.d(TAG, "scrollVerticallyBy: $sumDx, $sumDy")
+        if (sumDy < 0) {
+            sumDy = 0
+        }
+        if (sumDy > (config.maxCol - config.drawCol) * config.cellHeight) {
+            sumDy = (config.maxCol - config.drawCol) * config.cellHeight
+        }
         detachAndScrapAttachedViews(recycler)
         fill(recycler, state)
         // verHelper.offsetChildren(-dy)
@@ -115,6 +120,12 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
         state: RecyclerView.State
     ): Int {
         sumDx += dx
+        if (sumDx < 0) {
+            sumDx = 0
+        }
+        if (sumDx > (config.maxRow - config.drawRow) * config.cellWidth) {
+            sumDx = (config.maxRow - config.drawRow) * config.cellWidth
+        }
         detachAndScrapAttachedViews(recycler)
         fill(recycler, state)
         // horHelper.offsetChildren(-dx)

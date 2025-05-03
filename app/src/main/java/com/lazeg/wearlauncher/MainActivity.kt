@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.lazeg.wearlauncher.config.ItemConfig
 import com.lazeg.wearlauncher.config.LensConfig
 import com.lazeg.wearlauncher.databinding.ActivityMainBinding
 
@@ -25,12 +24,50 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mBinding.recyclerView.layoutManager = LensLayoutManager(
-            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf(
-                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
-                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
-                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
-                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
-                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+//            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf(
+//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
+//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
+//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
+//            ))
+            LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
+                arrayOf(
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                ),
+                arrayOf(
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                ),
+                arrayOf(
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.9f, 1.0f, 1.1f, 1.0f, 0.9f, 0.0f),
+                    floatArrayOf(0.0f, 1.0f, 1.1f, 1.2f, 1.1f, 1.0f, 0.0f),
+                    floatArrayOf(0.0f, 1.1f, 1.2f, 1.5f, 1.2f, 1.1f, 0.0f),
+                    floatArrayOf(0.0f, 1.0f, 1.1f, 1.2f, 1.1f, 1.0f, 0.0f),
+                    floatArrayOf(0.0f, 0.9f, 1.0f, 1.1f, 1.0f, 0.9f, 0.0f),
+                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                ),
+//                arrayOf(
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                ),
             ))
         )
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
