@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.carousel.CarouselSnapHelper
 import com.lazeg.wearlauncher.config.LensConfig
 import com.lazeg.wearlauncher.databinding.ActivityMainBinding
 
@@ -50,13 +52,22 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
                     floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
                 ),
+//                arrayOf(
+//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
+//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
+//                    floatArrayOf(0.0f, 0.8f, 0.9f, 1.0f, 0.9f, 0.8f, 0.0f),
+//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
+//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
+//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+//                ),
                 arrayOf(
                     floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.9f, 1.0f, 1.1f, 1.0f, 0.9f, 0.0f),
-                    floatArrayOf(0.0f, 1.0f, 1.1f, 1.2f, 1.1f, 1.0f, 0.0f),
-                    floatArrayOf(0.0f, 1.1f, 1.2f, 1.5f, 1.2f, 1.1f, 0.0f),
-                    floatArrayOf(0.0f, 1.0f, 1.1f, 1.2f, 1.1f, 1.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.9f, 1.0f, 1.1f, 1.0f, 0.9f, 0.0f),
+                    floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                    floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                    floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
+                    floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                    floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
                     floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
                 ),
 //                arrayOf(
@@ -71,9 +82,14 @@ class MainActivity : AppCompatActivity() {
             ))
         )
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
-        // LinearSnapHelper().attachToRecyclerView(mBinding.recyclerView)
+        LensSnapHelper().attachToRecyclerView(mBinding.recyclerView)
+//        LinearSnapHelper().attachToRecyclerView(mBinding.recyclerView)
         mBinding.viewBoard.post {
             Log.d(TAG, "onCreate: ${mBinding.viewBoard.x}, ${mBinding.viewBoard.y}")
+        }
+
+        mBinding.btnScrollTo.setOnClickListener {
+            mBinding.recyclerView.smoothScrollToPosition( 901)
         }
     }
 

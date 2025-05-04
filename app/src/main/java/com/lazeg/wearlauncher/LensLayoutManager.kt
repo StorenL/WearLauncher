@@ -6,24 +6,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lazeg.wearlauncher.config.ItemConfig.Companion.progressTo
 import com.lazeg.wearlauncher.config.ItemConfig.Companion.recycle
 import com.lazeg.wearlauncher.config.LensConfig
-import kotlin.math.max
 import kotlin.math.roundToInt
 
-class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
+class LensLayoutManager(internal val config: LensConfig) :
+    RecyclerView.LayoutManager()
+    /*RecyclerView.SmoothScroller.ScrollVectorProvider*/ {
 
     companion object {
         private const val DEBUG: Boolean = true
         private const val TAG: String = "LensLayoutManager"
     }
 
-    private var sumDx: Int = 0
-    private var sumDy: Int = 0
+    internal var sumDx: Int = 0
+    internal var sumDy: Int = 0
 
     private val horHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.HORIZONTAL)
     private val verHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.VERTICAL)
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams =
-        RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+        RecyclerView.LayoutParams(
+            RecyclerView.LayoutParams.WRAP_CONTENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         if (state.itemCount == 0) {
@@ -58,22 +62,30 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
                 val view = recycler.getViewForPosition(index)
 
                 var curRowCurColItemConfig = config.takeItemConfig(row - _startRow, col - _startCol)
-                var preRowCurColItemConfig = config.takeItemConfig(row - _startRow - 1, col - _startCol)
-                curRowCurColItemConfig = curRowCurColItemConfig.progressTo(preRowCurColItemConfig, rowProgress - rowProgress.toInt())
+                var preRowCurColItemConfig =
+                    config.takeItemConfig(row - _startRow - 1, col - _startCol)
+                curRowCurColItemConfig = curRowCurColItemConfig.progressTo(
+                    preRowCurColItemConfig,
+                    rowProgress - rowProgress.toInt()
+                )
 
-                var curRowPreColItemConfig = config.takeItemConfig(row - _startRow, col - _startCol - 1)
-                val preRowPreColItemConfig =  config.takeItemConfig(row - _startRow - 1, col - _startCol - 1)
-                curRowPreColItemConfig = curRowPreColItemConfig.progressTo(preRowPreColItemConfig, rowProgress - rowProgress.toInt())
+                var curRowPreColItemConfig =
+                    config.takeItemConfig(row - _startRow, col - _startCol - 1)
+                val preRowPreColItemConfig =
+                    config.takeItemConfig(row - _startRow - 1, col - _startCol - 1)
+                curRowPreColItemConfig = curRowPreColItemConfig.progressTo(
+                    preRowPreColItemConfig,
+                    rowProgress - rowProgress.toInt()
+                )
 
-                val itemConfig = curRowCurColItemConfig.progressTo(curRowPreColItemConfig, colProgress - colProgress.toInt())
+                val itemConfig = curRowCurColItemConfig.progressTo(
+                    curRowPreColItemConfig,
+                    colProgress - colProgress.toInt()
+                )
 
                 curRowCurColItemConfig.recycle()
                 curRowPreColItemConfig.recycle()
                 itemConfig.recycle()
-
-                if (row == 1 && col == 0) {
-                    Log.d(TAG, "fill: $sumDy,$sumDx $startRow,$startCol $rowProgress\n$colProgress\n$itemConfig")
-                }
                 view.scaleX = itemConfig.scale
                 view.scaleY = itemConfig.scale
                 addView(view)
@@ -101,17 +113,21 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
         recycler: RecyclerView.Recycler,
         state: RecyclerView.State
     ): Int {
+        var consume = dy
         sumDy += dy
         if (sumDy < 0) {
+            consume = -(sumDy - dy)
             sumDy = 0
         }
-        if (sumDy > (config.maxCol - config.drawCol) * config.cellHeight) {
-            sumDy = (config.maxCol - config.drawCol) * config.cellHeight
+        val max = (config.maxCol - config.drawCol) * config.cellHeight
+        if (sumDy > max) {
+            consume = max - (sumDy - dy)
+            sumDy = max
         }
         detachAndScrapAttachedViews(recycler)
         fill(recycler, state)
         // verHelper.offsetChildren(-dy)
-        return dy
+        return consume
     }
 
     override fun scrollHorizontallyBy(
@@ -119,20 +135,61 @@ class LensLayoutManager(val config: LensConfig) : RecyclerView.LayoutManager() {
         recycler: RecyclerView.Recycler,
         state: RecyclerView.State
     ): Int {
+        var consume = dx
         sumDx += dx
         if (sumDx < 0) {
+            consume = -(sumDx - dx)
             sumDx = 0
         }
-        if (sumDx > (config.maxRow - config.drawRow) * config.cellWidth) {
-            sumDx = (config.maxRow - config.drawRow) * config.cellWidth
+        val max = (config.maxRow - config.drawRow) * config.cellWidth
+        if (sumDx > max) {
+            consume = max - (sumDx - dx)
+            sumDx = max
         }
         detachAndScrapAttachedViews(recycler)
         fill(recycler, state)
         // horHelper.offsetChildren(-dx)
-        return dx
+        return consume
     }
 
     override fun canScrollVertically(): Boolean = true
 
     override fun canScrollHorizontally(): Boolean = true
+
+//    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
+//        if (childCount == 0) {
+//            return null
+//        }
+//        val firstChild = getChildAt(0) ?: return null
+//        val firstChildPos = getPosition(firstChild)
+//        val firstChildRow = firstChildPos / config.maxCol
+//        val firstChildCol = firstChildPos % config.maxCol
+//        val targetRow = targetPosition / config.maxCol
+//        val targetCol = targetPosition % config.maxCol
+//        var directionX = (targetCol - firstChildCol).coerceIn(-1, 1)
+//        if (!canScrollHorizontally()) {
+//            directionX = 0
+//        }
+//        var directionY = (targetRow - firstChildRow).coerceIn(-1, 1)
+//        if (!canScrollVertically()) {
+//            directionY = 0
+//        }
+//        return PointF(directionX.toFloat(), directionY.toFloat())
+//    }
+
+    override fun smoothScrollToPosition(
+        recyclerView: RecyclerView,
+        state: RecyclerView.State,
+        position: Int
+    ) {
+        // Not available
+        // LinearSmoothScroller(recyclerView.context).let {
+        //     it.targetPosition = position
+        //     startSmoothScroll(it)
+        // }
+        Log.d(TAG, "smoothScrollToPosition: $position")
+        val targetSumDx = position % config.maxCol * config.cellWidth
+        val targetSumDy = position / config.maxCol * config.cellHeight
+        recyclerView.smoothScrollBy(targetSumDx - sumDx, targetSumDy - sumDy)
+    }
 }
