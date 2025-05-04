@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.carousel.CarouselSnapHelper
 import com.lazeg.wearlauncher.config.LensConfig
 import com.lazeg.wearlauncher.databinding.ActivityMainBinding
 
@@ -25,62 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-        mBinding.recyclerView.layoutManager = LensLayoutManager(
-//            LensConfig(300, 300, 3, 3, 1, 100, 100, 0, listOf(
-//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
-//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
-//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
-//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 0.5F), ItemConfig(0F, 0F, 1F)),
-//                listOf(ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F), ItemConfig(0F, 0F, 1F)),
-//            ))
-            LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
-                arrayOf(
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                ),
-                arrayOf(
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                ),
-//                arrayOf(
-//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
-//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
-//                    floatArrayOf(0.0f, 0.8f, 0.9f, 1.0f, 0.9f, 0.8f, 0.0f),
-//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
-//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
-//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-//                ),
-                arrayOf(
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                    floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
-                    floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
-                    floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
-                    floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
-                    floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
-                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                ),
-//                arrayOf(
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
-//                ),
-            ))
-        )
+        mBinding.recyclerView.layoutManager = LensLayoutManager(lensConfig3)
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
         LensSnapHelper().attachToRecyclerView(mBinding.recyclerView)
 //        LinearSnapHelper().attachToRecyclerView(mBinding.recyclerView)
@@ -89,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mBinding.btnScrollTo.setOnClickListener {
-            mBinding.recyclerView.smoothScrollToPosition( 901)
+            mBinding.recyclerView.smoothScrollToPosition(901)
         }
     }
 
@@ -100,6 +43,152 @@ class MainActivity : AppCompatActivity() {
                 add(R.drawable.outline_balance_24)
             }
         }
+    }
+
+    private val lensConfig4 by lazy {
+        LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
+            arrayOf(
+                floatArrayOf(0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f),
+                floatArrayOf(-0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f),
+                floatArrayOf(0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f),
+                floatArrayOf(-0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f),
+                floatArrayOf(0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f),
+                floatArrayOf(-0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f, -0.25f),
+                floatArrayOf(0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                floatArrayOf(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                floatArrayOf(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                floatArrayOf(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                floatArrayOf(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+        ))
+    }
+
+    private val lensConfig3 by lazy {
+        LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
+            arrayOf(
+                floatArrayOf(0.5f, 0.5f, 0.5f, 0.0f, -0.5f, -0.5f, -0.5f),
+                floatArrayOf(0.5f, 0.4f, 0.1f, 0.0f, -0.1f, -0.4f, -0.5f),
+                floatArrayOf(0.5f, 0.1f, 0.0f, 0.0f, 0.0f, -0.1f, -0.5f),
+                floatArrayOf(0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -0.5f),
+                floatArrayOf(0.5f, 0.1f, 0.0f, 0.0f, 0.0f, -0.1f, -0.5f),
+                floatArrayOf(0.5f, 0.4f, 0.1f, 0.0f, -0.1f, -0.4f, -0.5f),
+                floatArrayOf(0.5f, 0.5f, 0.5f, 0.0f, -0.5f, -0.5f, -0.5f),
+            ),
+            arrayOf(
+                floatArrayOf(0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f),
+                floatArrayOf(0.5f, 0.4f, 0.1f, 0.0f, 0.1f, 0.4f, 0.5f),
+                floatArrayOf(0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 0.1f, 0.5f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(-0.5f, -0.1f, 0.0f, 0.0f, 0.0f, -0.1f, -0.5f),
+                floatArrayOf(-0.5f, -0.4f, -0.1f, 0.0f, -0.1f, -0.4f, -0.5f),
+                floatArrayOf(-0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+        ))
+    }
+
+    private val lensConfig2 by lazy {
+        LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.1f, 0.0f, -0.1f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.1f, 0.0f, 0.0f, 0.0f, -0.1f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.1f, 0.0f, 0.0f, 0.0f, -0.1f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.1f, 0.0f, -0.1f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.1f, 0.0f, 0.1f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.1f, 0.0f, 0.0f, 0.0f, 0.1f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, -0.1f, 0.0f, 0.0f, 0.0f, -0.1f, 0.0f),
+                floatArrayOf(0.0f, -0.4f, -0.1f, 0.0f, -0.1f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+        ))
+    }
+
+    private val lensConfig1 by lazy {
+        LensConfig(180, 180, 5, 5, 1, 100, 100, 0, LensConfig.buildItemConfigs(
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.2f, 0.0f, -0.2f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.2f, 0.0f, 0.0f, 0.0f, -0.2f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.2f, 0.0f, 0.0f, 0.0f, -0.2f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.2f, 0.0f, -0.2f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.2f, 0.0f, -0.2f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.2f, 0.0f, 0.0f, 0.0f, -0.2f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.2f, 0.0f, 0.0f, 0.0f, -0.2f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.2f, 0.0f, -0.2f, -0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+//                arrayOf(
+//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
+//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
+//                    floatArrayOf(0.0f, 0.8f, 0.9f, 1.0f, 0.9f, 0.8f, 0.0f),
+//                    floatArrayOf(0.0f, 0.7f, 0.8f, 0.9f, 0.8f, 0.7f, 0.0f),
+//                    floatArrayOf(0.0f, 0.6f, 0.7f, 0.8f, 0.7f, 0.6f, 0.0f),
+//                    floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+//                ),
+            arrayOf(
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
+                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
+                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
+                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+            ),
+//                arrayOf(
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                    floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f, 1f),
+//                ),
+        ))
     }
 }
 

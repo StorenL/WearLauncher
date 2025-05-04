@@ -45,13 +45,13 @@ class LensLayoutManager(internal val config: LensConfig) :
 
         val rowProgress = sumDy * 1f / config.cellHeight
         val colProgress = sumDx * 1f / config.cellWidth
-        val startRow = rowProgress.roundToInt() - config.overDraw
-        val startCol = colProgress.roundToInt() - config.overDraw
-        val _startRow = rowProgress.toInt() - config.overDraw
-        val _startCol = colProgress.toInt() - config.overDraw
+        val startRowRound = rowProgress.roundToInt() - config.overDraw
+        val startColRound = colProgress.roundToInt() - config.overDraw
+        val startRow = rowProgress.toInt() - config.overDraw
+        val startCol = colProgress.toInt() - config.overDraw
 
-        for (row in startRow until (startRow + config.drawRow + config.overDraw * 2)) {
-            for (col in startCol until (startCol + config.drawCol + config.overDraw * 2)) {
+        for (row in startRowRound until (startRowRound + config.drawRow + config.overDraw * 2)) {
+            for (col in startColRound until (startColRound + config.drawCol + config.overDraw * 2)) {
                 if (row < 0 || col >= config.maxCol || col < 0) {
                     continue
                 }
@@ -61,18 +61,18 @@ class LensLayoutManager(internal val config: LensConfig) :
                 }
                 val view = recycler.getViewForPosition(index)
 
-                var curRowCurColItemConfig = config.takeItemConfig(row - _startRow, col - _startCol)
+                var curRowCurColItemConfig = config.takeItemConfig(row - startRow, col - startCol)
                 var preRowCurColItemConfig =
-                    config.takeItemConfig(row - _startRow - 1, col - _startCol)
+                    config.takeItemConfig(row - startRow - 1, col - startCol)
                 curRowCurColItemConfig = curRowCurColItemConfig.progressTo(
                     preRowCurColItemConfig,
                     rowProgress - rowProgress.toInt()
                 )
 
                 var curRowPreColItemConfig =
-                    config.takeItemConfig(row - _startRow, col - _startCol - 1)
+                    config.takeItemConfig(row - startRow, col - startCol - 1)
                 val preRowPreColItemConfig =
-                    config.takeItemConfig(row - _startRow - 1, col - _startCol - 1)
+                    config.takeItemConfig(row - startRow - 1, col - startCol - 1)
                 curRowPreColItemConfig = curRowPreColItemConfig.progressTo(
                     preRowPreColItemConfig,
                     rowProgress - rowProgress.toInt()
@@ -90,8 +90,10 @@ class LensLayoutManager(internal val config: LensConfig) :
                 view.scaleY = itemConfig.scale
                 addView(view)
                 measureChildWithMargins(view, 0, 0)
-                val left = col * config.cellWidth - sumDx + paddingLeft
-                val top = row * config.cellHeight - sumDy + paddingTop
+                val left = col * config.cellWidth - sumDx + paddingLeft + // Origin position
+                        (itemConfig.offsetX * config.cellWidth).toInt()   // With offset
+                val top = row * config.cellHeight - sumDy + paddingTop + // Origin position
+                        (itemConfig.offsetY * config.cellHeight).toInt()  // With offset
                 layoutDecoratedWithMargins(
                     view,
                     left,
