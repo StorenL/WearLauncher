@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-        mBinding.recyclerView.layoutManager = LensLayoutManager(lensConfig3)
+        val lensLayoutManager = LensLayoutManager(lensConfig3)
+        mBinding.recyclerView.layoutManager = lensLayoutManager
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
         mBinding.recyclerView.setItemViewCacheSize(250)
         LensSnapHelper().attachToRecyclerView(mBinding.recyclerView)
@@ -35,6 +36,11 @@ class MainActivity : AppCompatActivity() {
 
         mBinding.btnScrollTo.setOnClickListener {
             mBinding.recyclerView.smoothScrollToPosition(901)
+        }
+        
+        mBinding.slideEffect.addOnChangeListener { slide, value, b ->
+            Log.d(TAG, "onCreate: $value, $b")
+            lensLayoutManager.updateEffect(value)
         }
     }
 
