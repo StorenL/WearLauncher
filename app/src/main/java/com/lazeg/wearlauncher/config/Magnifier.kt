@@ -7,7 +7,7 @@ import java.util.Stack
 data class ItemConfig(
     var offsetX: Float,
     var offsetY: Float,
-    var scale: Float,
+    var offsetScale: Float,
 ) {
     companion object {
         private const val TAG: String = "ItemConfig"
@@ -30,7 +30,7 @@ data class ItemConfig(
             val config = obtain()
             config.offsetX = offsetX + (target.offsetX - offsetX) * progress
             config.offsetY = offsetY + (target.offsetY - offsetY) * progress
-            config.scale = scale + (target.scale - scale) * progress
+            config.offsetScale = offsetScale + (target.offsetScale - offsetScale) * progress
             return config
         }
     }

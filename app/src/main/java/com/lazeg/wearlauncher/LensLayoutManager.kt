@@ -20,6 +20,13 @@ class LensLayoutManager(internal val config: LensConfig) :
     internal var sumDx: Int = 0
     internal var sumDy: Int = 0
 
+    private var effectFactor: Float = 1f
+
+    fun updateEffect(factor: Float) {
+        effectFactor = factor
+        requestLayout()
+    }
+
     private val horHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.HORIZONTAL)
     private val verHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.VERTICAL)
 
@@ -86,14 +93,14 @@ class LensLayoutManager(internal val config: LensConfig) :
                 curRowCurColItemConfig.recycle()
                 curRowPreColItemConfig.recycle()
                 itemConfig.recycle()
-                view.scaleX = itemConfig.scale
-                view.scaleY = itemConfig.scale
+                view.scaleX = 1 + itemConfig.offsetScale * effectFactor
+                view.scaleY = 1 + itemConfig.offsetScale * effectFactor
                 addView(view)
                 measureChildWithMargins(view, 0, 0)
                 val left = col * config.cellWidth - sumDx + paddingLeft + // Origin position
-                        (itemConfig.offsetX * config.cellWidth).toInt()   // With offset
+                        (itemConfig.offsetX * config.cellWidth * effectFactor).toInt()   // With offset
                 val top = row * config.cellHeight - sumDy + paddingTop + // Origin position
-                        (itemConfig.offsetY * config.cellHeight).toInt()  // With offset
+                        (itemConfig.offsetY * config.cellHeight * effectFactor).toInt()  // With offset
                 layoutDecoratedWithMargins(
                     view,
                     left,

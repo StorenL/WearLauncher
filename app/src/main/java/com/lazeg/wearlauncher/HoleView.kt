@@ -20,20 +20,20 @@ class HoleView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         holePath.reset()
-        holePath.addCircle(width / 2f, height / 2f, 450f, Path.Direction.CW)
-//        holePath.addRoundRect(
-//            width / 2f - 450f,
-//            height / 2f - 450f,
-//            width / 2f + 450f,
-//            height / 2f + 450f,
-//            30f, 30f,
-//            Path.Direction.CW
-//        )
+//        holePath.addCircle(width / 2f, height / 2f, 450f, Path.Direction.CW)
+        holePath.addRoundRect(
+            width / 2f - 450f,
+            height / 2f - 450f,
+            width / 2f + 450f,
+            height / 2f + 450f,
+            30f, 30f,
+            Path.Direction.CW
+        )
         viewPath.reset()
         viewPath.addRect(0F, 0F, width.toFloat(), height.toFloat(), Path.Direction.CW)
         viewPath.op(holePath, Path.Op.DIFFERENCE)
         canvas.withClip(viewPath) {
-            drawColor("#000000".toColorInt())
+            drawColor("#BB000000".toColorInt())
 //            drawColor("#FFFFFF".toColorInt())
         }
     }

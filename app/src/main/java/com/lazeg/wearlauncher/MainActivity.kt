@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lazeg.wearlauncher.config.LensConfig
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         mBinding.recyclerView.layoutManager = LensLayoutManager(lensConfig3)
         mBinding.recyclerView.adapter = IconGridAdapter(getIconList())
+        mBinding.recyclerView.setItemViewCacheSize(250)
         LensSnapHelper().attachToRecyclerView(mBinding.recyclerView)
 //        LinearSnapHelper().attachToRecyclerView(mBinding.recyclerView)
         mBinding.viewBoard.post {
@@ -98,13 +100,13 @@ class MainActivity : AppCompatActivity() {
                 floatArrayOf(-0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f),
             ),
             arrayOf(
-                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
-                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
-                floatArrayOf(0.0f, 0.6f, 0.9f, 1.0f, 0.9f, 0.6f, 0.0f),
-                floatArrayOf(0.0f, 0.5f, 0.8f, 0.9f, 0.8f, 0.5f, 0.0f),
-                floatArrayOf(0.0f, 0.4f, 0.5f, 0.6f, 0.5f, 0.4f, 0.0f),
-                floatArrayOf(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                floatArrayOf(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f),
+                floatArrayOf(-1.0f, -0.6f, -0.5f, -0.4f, -0.5f, -0.6f, -1.0f),
+                floatArrayOf(-1.0f, -0.5f, -0.2f, -0.1f, -0.2f, -0.5f, -1.0f),
+                floatArrayOf(-1.0f, -0.4f, -0.1f, 0.0f, -0.1f, -0.4f, -1.0f),
+                floatArrayOf(-1.0f, -0.5f, -0.2f, -0.1f, -0.2f, -0.5f, -1.0f),
+                floatArrayOf(-1.0f, -0.6f, -0.5f, -0.4f, -0.5f, -0.6f, -1.0f),
+                floatArrayOf(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f),
             ),
         ))
     }
@@ -198,6 +200,7 @@ class IconGridAdapter(private val iconList: List<Int>) :
 
     class IconViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val iconImageView: ImageView = itemView.findViewById(R.id.iconImageView)
+        val tvNum: TextView = itemView.findViewById(R.id.tvNum)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconViewHolder {
@@ -209,6 +212,7 @@ class IconGridAdapter(private val iconList: List<Int>) :
     override fun onBindViewHolder(holder: IconViewHolder, position: Int) {
         val currentIcon = iconList[position]
         holder.iconImageView.setImageResource(currentIcon)
+        holder.tvNum.text = position.toString()
         // You can add click listeners or other logic here if needed
     }
 
