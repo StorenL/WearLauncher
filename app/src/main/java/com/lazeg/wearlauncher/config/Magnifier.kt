@@ -1,7 +1,7 @@
 package com.lazeg.wearlauncher.config
 
+import android.animation.TypeEvaluator
 import android.util.Log
-import kotlinx.coroutines.sync.Mutex
 import java.util.Stack
 
 data class ItemConfig(
@@ -73,4 +73,10 @@ data class LensConfig(
         }
     }
 }
+
+data class ItemPropConfig<T>(
+    val defaultValue: T,
+    val offsetValue: T,
+    val evaluator: TypeEvaluator<T>
+)
 
