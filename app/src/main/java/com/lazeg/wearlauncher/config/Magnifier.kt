@@ -74,7 +74,8 @@ data class LensConfig(
     }
 }
 
-data class ItemPropConfig<T>(
+data class OffsetProp<T>(
+    val propName: String,
     val defaultValue: T,
     val offsetValue: T,
     val evaluator: TypeEvaluator<T>
