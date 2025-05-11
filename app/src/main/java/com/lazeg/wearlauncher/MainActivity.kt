@@ -39,8 +39,15 @@ class MainActivity : AppCompatActivity() {
         }
         
         mBinding.slideEffect.addOnChangeListener { slide, value, b ->
-            Log.d(TAG, "onCreate: $value, $b")
             lensLayoutManager.updateEffect(value)
+        }
+
+        mBinding.slideMask.addOnChangeListener { slide, value, b ->
+            mBinding.viewBoard.alpha = value
+        }
+
+        mBinding.slideMaskRound.addOnChangeListener { slide, value, b ->
+            mBinding.viewBoard.updateRoundRadius(value)
         }
     }
 

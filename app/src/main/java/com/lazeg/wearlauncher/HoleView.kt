@@ -18,6 +18,13 @@ class HoleView @JvmOverloads constructor(
     private val holePath = Path()
     private val viewPath = Path()
 
+    private var roundRadius = 0f
+
+    fun updateRoundRadius(radius: Float) {
+        roundRadius = radius * 450
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas) {
         holePath.reset()
 //        holePath.addCircle(width / 2f, height / 2f, 450f, Path.Direction.CW)
@@ -26,14 +33,14 @@ class HoleView @JvmOverloads constructor(
             height / 2f - 450f,
             width / 2f + 450f,
             height / 2f + 450f,
-            30f, 30f,
+            roundRadius, roundRadius,
             Path.Direction.CW
         )
         viewPath.reset()
         viewPath.addRect(0F, 0F, width.toFloat(), height.toFloat(), Path.Direction.CW)
         viewPath.op(holePath, Path.Op.DIFFERENCE)
         canvas.withClip(viewPath) {
-            drawColor("#BB000000".toColorInt())
+            drawColor("#000000".toColorInt())
 //            drawColor("#FFFFFF".toColorInt())
         }
     }
