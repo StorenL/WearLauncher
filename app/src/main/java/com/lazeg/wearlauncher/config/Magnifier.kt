@@ -2,6 +2,7 @@ package com.lazeg.wearlauncher.config
 
 import android.animation.TypeEvaluator
 import android.util.Log
+import android.view.View
 import java.util.Stack
 
 data class ItemConfig(
@@ -74,10 +75,41 @@ data class LensConfig(
     }
 }
 
-data class OffsetProp<T>(
-    val propName: String,
-    val defaultValue: T,
-    val offsetValue: T,
-    val evaluator: TypeEvaluator<T>
+data class LensPropConfig (
+    val cellWidth: Int,
+    val cellHeight: Int,
+    val drawRow: Int,
+    val drawCol: Int,
+    val overDraw: Int, // 显示区域外，额外显示的部分
+    val maxRow: Int,
+    val maxCol: Int,
+    val expendDir: Int,
+    val itemConfigs: List<List<TransformProp<*>>>
 )
+
+data class TransformProp<T>(
+    val propName: String,
+    val startValue: T,
+    val endValue: T,
+    val evaluator: TypeEvaluator<T>
+) {
+
+    companion object {
+        private const val TAG: String = "TransformProp"
+    }
+
+    fun View.transform(progress: Float, prop: TransformProp<T>) {
+        val value = evaluator.evaluate(progress, prop.startValue, prop.endValue)
+        when (prop.propName) {
+            "scaleX" -> scaleX = value as Float
+            "scaleY" -> scaleY = value as Float
+            "translationX" -> translationX = value as Float
+            "translationY" -> translationY = value as Float
+            "rotation" -> rotation = value as Float
+            "rotationX" -> rotationX = value as Float
+            "rotationY" -> rotationY = value as Float
+            "alpha" -> alpha = value as Float
+        }
+    }
+}
 

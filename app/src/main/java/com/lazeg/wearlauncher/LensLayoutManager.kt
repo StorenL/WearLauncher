@@ -31,6 +31,10 @@ class LensLayoutManager(internal val config: LensConfig) :
     private val verHelper = OrientationHelper.createOrientationHelper(this, RecyclerView.VERTICAL)
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams =
+//        RecyclerView.LayoutParams(
+//            config.cellWidth,
+//            config.cellHeight
+//        )
         RecyclerView.LayoutParams(
             RecyclerView.LayoutParams.WRAP_CONTENT,
             RecyclerView.LayoutParams.WRAP_CONTENT
@@ -95,6 +99,8 @@ class LensLayoutManager(internal val config: LensConfig) :
                 itemConfig.recycle()
                 view.scaleX = 1 + itemConfig.offsetScale * effectFactor
                 view.scaleY = 1 + itemConfig.offsetScale * effectFactor
+                view.layoutParams.width = config.cellWidth
+                view.layoutParams.height = config.cellHeight
                 addView(view)
                 measureChildWithMargins(view, 0, 0)
                 val left = col * config.cellWidth - sumDx + paddingLeft + // Origin position
